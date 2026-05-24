@@ -116,6 +116,9 @@ Then open your browser at `http://127.0.0.1:8050`
 ```
 Diabetes-Prediction/
 │
+├── data/
+│   └── diabetes_dataset.csv
+│
 ├── notebooks/
 │   ├── Diabetes_ML.ipynb
 │   └── Model_Comparison.ipynb
@@ -125,7 +128,7 @@ Diabetes-Prediction/
 │   └── model_comparison.py
 │
 ├── requirements.txt
-└── README.md         
+└── README.md      
 ```
 
 ---
