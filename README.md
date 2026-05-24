@@ -1,5 +1,7 @@
 # Diabetes Prediction — Machine Learning Dashboard
 
+🚀 Live Demo: https://diabetes-prediction-ornq.onrender.com/
+
 An end-to-end machine learning project that predicts diabetes risk using clinical and demographic data, presented through an interactive Plotly Dash dashboard with exploratory data analysis and multi-model evaluation.
 
 ---
