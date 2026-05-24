@@ -116,11 +116,16 @@ Then open your browser at `http://127.0.0.1:8050`
 ```
 Diabetes-Prediction/
 │
-├── diabetes_dashboard.py     # Main Dash dashboard app
-├── model_comparison.py       # Standalone script — prints all model results
-├── Diabetes_ML_2.py  # Original analysis script (cleaned)
-├── requirements.txt          # Python dependencies
-└── README.md                 
+├── notebooks/
+│   ├── Diabetes_ML.ipynb
+│   └── Model_Comparison.ipynb
+│
+├── src/
+│   ├── diabetes_dashboard.py
+│   └── model_comparison.py
+│
+├── requirements.txt
+└── README.md         
 ```
 
 ---
