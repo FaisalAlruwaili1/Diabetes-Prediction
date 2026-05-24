@@ -1,1 +1,1 @@
-web: gunicorn diabetes_dashboard:server
+web: gunicorn src.diabetes_dashboard:server
