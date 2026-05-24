@@ -117,7 +117,7 @@ diabetes-ml-dashboard/
 │
 ├── diabetes_dashboard.py     # Main Dash dashboard app
 ├── model_comparison.py       # Standalone script — prints all model results
-├── Diabetes_ML_corrected.py  # Original analysis script (cleaned)
+├── Diabetes_ML_2.py  # Original analysis script (cleaned)
 ├── requirements.txt          # Python dependencies
 └── README.md                 
 ```
