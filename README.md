@@ -126,11 +126,10 @@ Diabetes-Prediction/
 ├── src/
 │   ├── __init__.py
 │   ├── diabetes_dashboard.py
-│   └── model_comparison.py
 │
 ├── requirements.txt
 ├── Procfile
-└── README.md 
+└── README.md
 ```
 
 ---
