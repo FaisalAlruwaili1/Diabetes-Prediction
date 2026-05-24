@@ -12,7 +12,8 @@ The goal of this project is to build and evaluate multiple machine learning clas
 
 ## Dataset
 
-- **Source:** `diabetes_dataset.csv`
+- **Source:** [https://www.kaggle.com/datasets/priyamchoksi/100000-diabetes-clinical-dataset](https://www.kaggle.com/datasets/priyamchoksi/100000-diabetes-clinical-dataset)
+- **License:** MIT
 - **Size:** ~100,000 records
 - **Features:** age, gender, BMI, HbA1c level, blood glucose level, hypertension, heart disease, smoking history, location, year, race
 - **Target:** `diabetes` (binary — 0: No, 1: Yes)
