@@ -114,7 +114,7 @@ Then open your browser at `http://127.0.0.1:8050`
 ## File Structure
 
 ```
-diabetes-ml-dashboard/
+Diabetes-Prediction/
 │
 ├── diabetes_dashboard.py     # Main Dash dashboard app
 ├── model_comparison.py       # Standalone script — prints all model results
