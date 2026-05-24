@@ -248,7 +248,7 @@ app = dash.Dash(
         "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap",
     ],
 )
-
+server = app.server
 app.layout = html.Div(style={
     "background": DARK,
     "minHeight": "100vh",
@@ -472,4 +472,4 @@ def show_summary(n):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
