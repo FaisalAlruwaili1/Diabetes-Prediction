@@ -124,12 +124,13 @@ Diabetes-Prediction/
 │   └── Model_Comparison.ipynb
 │
 ├── src/
+│   ├── __init__.py
 │   ├── diabetes_dashboard.py
 │   └── model_comparison.py
 │
 ├── requirements.txt
 ├── Procfile
-└── README.md   
+└── README.md 
 ```
 
 ---
