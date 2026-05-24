@@ -26,7 +26,7 @@ from sklearn.metrics import (
 # ─────────────────────────────────────────────
 #  LOAD & PREP  (replace path with your file)
 # ─────────────────────────────────────────────
-df = pd.read_csv(r"C:\Users\USER\Downloads\diabetes_dataset.csv")
+df = pd.read_csv("diabetes_dataset.csv")
 
 # ── encoding ──────────────────────────────────
 df_model = df.copy()
