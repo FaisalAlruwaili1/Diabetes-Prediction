@@ -1,5 +1,3 @@
-
-
 import pandas as pd
 import numpy as np
 from collections import Counter
@@ -85,7 +83,8 @@ def run_model(name):
 # ─────────────────────────────────────────────
 DARK = "#0f1117"
 CARD = "#1a1d27"
-ACC  = "#6c63ff"
+ACC  = "#6c63ff"   # kept for chart color continuity (fig_conditions, fig_age)
+UI_ACC = "#f97316"  # orange — replaces violet in all non-chart UI elements
 TEXT = "#e2e8f0"
 MUTED= "#8892a4"
 
@@ -231,11 +230,11 @@ def metric_box(label, value, color):
     })
 
 METRIC_COLORS = {
-    "accuracy":  "#6c63ff",
+    "accuracy":  "#f97316",   # orange  (was purple #6c63ff)
     "f1_score":  "#10b981",
-    "recall":    "#f97316",
+    "recall":    "#fb923c",   # light orange  (was orange #f97316, now shifted to avoid clash)
     "precision": "#3b82f6",
-    "auc":       "#ec4899",
+    "auc":       "#f59e0b",   # amber  (was pink #ec4899)
 }
 
 # ─────────────────────────────────────────────
@@ -268,7 +267,7 @@ app.layout = html.Div(style={
             "fontFamily": "'Space Grotesk', sans-serif",
             "fontSize": "2.4rem",
             "fontWeight": "700",
-            "background": "linear-gradient(135deg, #6c63ff, #ec4899)",
+            "background": "linear-gradient(135deg, #f97316, #f59e0b)",
             "WebkitBackgroundClip": "text",
             "WebkitTextFillColor": "transparent",
             "margin": "0 0 8px 0",
@@ -348,7 +347,7 @@ app.layout = html.Div(style={
                 value="Logistic Regression",
                 clearable=False,
                 style={
-                    "background": "#252836",
+                    "background": "#010104",
                     "border": "1px solid #353849",
                     "borderRadius": "8px",
                     "color": TEXT,
@@ -356,7 +355,7 @@ app.layout = html.Div(style={
                 },
             ),
             html.Button("Run Model", id="run-btn", n_clicks=0, style={
-                "background": "linear-gradient(135deg, #6c63ff, #ec4899)",
+                "background": "linear-gradient(135deg, #f97316, #f59e0b)",
                 "color": "#fff",
                 "border": "none",
                 "borderRadius": "8px",
@@ -377,8 +376,8 @@ app.layout = html.Div(style={
 
             html.Button("📋  Models Summary", id="summary-btn", n_clicks=0, style={
                 "background": "transparent",
-                "color": "#6c63ff",
-                "border": "1px solid #6c63ff",
+                "color": "#f97316",
+                "border": "1px solid #f97316",
                 "borderRadius": "8px",
                 "padding": "10px 24px",
                 "fontWeight": "700",
@@ -420,7 +419,7 @@ def update_results(n, model_name):
                 "fontFamily": "'Space Grotesk', sans-serif",
                 "fontSize": "1rem",
                 "fontWeight": "700",
-                "background": "linear-gradient(135deg, #6c63ff, #ec4899)",
+                "background": "linear-gradient(135deg, #f97316, #f59e0b)",
                 "WebkitBackgroundClip": "text",
                 "WebkitTextFillColor": "transparent",
             }),
@@ -464,7 +463,7 @@ def show_summary(n):
     ], style={
         "background": CARD,
         "border": "1px solid #252836",
-        "borderLeft": "3px solid #6c63ff",
+        "borderLeft": "3px solid #f97316",
         "borderRadius": "10px",
         "padding": "20px 24px",
         "maxWidth": "860px",
