@@ -21,11 +21,9 @@ from sklearn.metrics import (
     precision_score, roc_auc_score
 )
 
-# ─────────────────────────────────────────────
-#  LOAD & PREP  (replace path with your file)
-# ─────────────────────────────────────────────
+# Load data
 df = pd.read_csv("data/diabetes_dataset.csv")
-# ── encoding ──────────────────────────────────
+# Encoding
 df_model = df.copy()
 
 ord_enc = OrdinalEncoder()
@@ -36,7 +34,7 @@ df_model["year"]            = ord_enc.fit_transform(df_model[["year"]])
 lb = LabelEncoder()
 df_model["gender"] = lb.fit_transform(df_model["gender"])
 
-# drop non-numeric race columns if present
+# Drop race columns
 race_cols = [c for c in df_model.columns if "race:" in c]
 df_model.drop(columns=race_cols, inplace=True)
 
@@ -51,7 +49,7 @@ scaler     = StandardScaler()
 X_train_sc = scaler.fit_transform(X_train)
 X_test_sc  = scaler.transform(X_test)
 
-# ── model registry ────────────────────────────
+# Define models
 MODELS = {
     "Logistic Regression": LogisticRegression(penalty="l2", max_iter=1000),
     "Decision Tree":        DecisionTreeClassifier(),
@@ -78,13 +76,11 @@ def run_model(name):
         "auc":       round(roc_auc_score(y_test, y_pred),    4),
     }
 
-# ─────────────────────────────────────────────
-#  EDA FIGURES  (all plotly express)
-# ─────────────────────────────────────────────
+# EDA figures
 DARK = "#0f1117"
 CARD = "#1a1d27"
-ACC  = "#6c63ff"   # kept for chart color continuity (fig_conditions, fig_age)
-UI_ACC = "#f97316"  # orange — replaces violet in all non-chart UI elements
+ACC  = "#6c63ff"   
+UI_ACC = "#f97316"  
 TEXT = "#e2e8f0"
 MUTED= "#8892a4"
 
@@ -102,7 +98,7 @@ TEMPLATE = dict(
 def make_template():
     return "plotly_dark"
 
-# 1. condition counts bar
+# Condition counts
 fig_conditions = go.Figure()
 for col, color, label in [
     ("hypertension",  "#6c63ff", "Hypertension"),
@@ -120,7 +116,7 @@ fig_conditions.update_layout(
     legend=dict(bgcolor="rgba(0,0,0,0)"),
 )
 
-# 2. age histogram
+# Age distribution
 fig_age = px.histogram(
     df, x="age", nbins=10,
     title="Age Distribution",
@@ -129,7 +125,7 @@ fig_age = px.histogram(
 )
 fig_age.update_layout(**{k: v for k, v in TEMPLATE["layout"].to_plotly_json().items() if k != "template"})
 
-# 3. smoking pie
+# Smoking history
 counter = Counter(df["smoking_history"])
 fig_smoking = px.pie(
     names=list(counter.keys()),
@@ -141,7 +137,7 @@ fig_smoking = px.pie(
 )
 fig_smoking.update_layout(**{k: v for k, v in TEMPLATE["layout"].to_plotly_json().items() if k not in ["template"]})
 
-# 4. race pie
+# Race distribution
 race = {"AfricanAmerican": 20223, "Hispanic": 19888, "Asian": 20015, "Caucasian": 19876, "Other": 80002}
 fig_race = px.pie(
     names=list(race.keys()),
@@ -153,7 +149,7 @@ fig_race = px.pie(
 )
 fig_race.update_layout(**{k: v for k, v in TEMPLATE["layout"].to_plotly_json().items() if k not in ["template"]})
 
-# 5. blood glucose histogram
+# Blood glucose
 fig_glucose = px.histogram(
     df, x="blood_glucose_level", nbins=5,
     title="Blood Glucose Level",
@@ -162,7 +158,7 @@ fig_glucose = px.histogram(
 )
 fig_glucose.update_layout(**{k: v for k, v in TEMPLATE["layout"].to_plotly_json().items() if k not in ["template"]})
 
-# 6. HbA1c histogram
+# HbA1c
 fig_hba1c = px.histogram(
     df, x="hbA1c_level", nbins=6,
     title="HbA1c Level",
@@ -171,7 +167,7 @@ fig_hba1c = px.histogram(
 )
 fig_hba1c.update_layout(**{k: v for k, v in TEMPLATE["layout"].to_plotly_json().items() if k not in ["template"]})
 
-# 7. BMI histogram
+# BMI
 fig_bmi = px.histogram(
     df, x="bmi", nbins=11, range_x=[10, 60],
     title="BMI Distribution",
@@ -180,7 +176,7 @@ fig_bmi = px.histogram(
 )
 fig_bmi.update_layout(**{k: v for k, v in TEMPLATE["layout"].to_plotly_json().items() if k not in ["template"]})
 
-# 8. correlation heatmap
+# Correlation heatmap
 num_cols = df.select_dtypes(include=["int", "float"]).columns.tolist()
 corr = df[num_cols].corr()
 fig_corr = px.imshow(
@@ -193,9 +189,7 @@ fig_corr = px.imshow(
 )
 fig_corr.update_layout(**{k: v for k, v in TEMPLATE["layout"].to_plotly_json().items() if k not in ["template"]})
 
-# ─────────────────────────────────────────────
-#  LAYOUT HELPERS
-# ─────────────────────────────────────────────
+# Layout helpers
 def metric_box(label, value, color):
     return html.Div([
         html.P(label, style={
@@ -230,16 +224,14 @@ def metric_box(label, value, color):
     })
 
 METRIC_COLORS = {
-    "accuracy":  "#f97316",   # orange  (was purple #6c63ff)
+    "accuracy":  "#f97316",   
     "f1_score":  "#10b981",
-    "recall":    "#fb923c",   # light orange  (was orange #f97316, now shifted to avoid clash)
+    "recall":    "#fb923c",   
     "precision": "#3b82f6",
-    "auc":       "#f59e0b",   # amber  (was pink #ec4899)
+    "auc":       "#f59e0b",   
 }
 
-# ─────────────────────────────────────────────
-#  APP
-# ─────────────────────────────────────────────
+# App layout
 app = dash.Dash(
     __name__,
     external_stylesheets=[
@@ -256,7 +248,7 @@ app.layout = html.Div(style={
     "padding": "0",
 }, children=[
 
-    # ── header ──
+   # Header
     html.Div([
         html.Div([
             html.Span("●", style={"color": "#ef4444", "marginRight": "6px", "fontSize": "10px"}),
@@ -283,7 +275,7 @@ app.layout = html.Div(style={
 
     html.Div(style={"padding": "40px 48px"}, children=[
 
-        # ── section: EDA ──
+        # EDA section
         html.H2("Exploratory Data Analysis", style={
             "fontFamily": "'Space Grotesk', sans-serif",
             "fontSize": "1.3rem",
@@ -294,12 +286,12 @@ app.layout = html.Div(style={
             "borderBottom": "1px solid #252836",
         }),
 
-        # row 1 — conditions bar (full width)
+        # Row 1
         html.Div([
             dcc.Graph(figure=fig_conditions, config={"displayModeBar": False}),
         ], style={"background": CARD, "borderRadius": "12px", "padding": "8px", "marginBottom": "20px"}),
 
-        # row 2 — age + smoking + race
+        # Row 2
         html.Div([
             html.Div([dcc.Graph(figure=fig_age,     config={"displayModeBar": False})],
                      style={"flex": "1", "background": CARD, "borderRadius": "12px", "padding": "8px"}),
@@ -309,7 +301,7 @@ app.layout = html.Div(style={
                      style={"flex": "1", "background": CARD, "borderRadius": "12px", "padding": "8px"}),
         ], style={"display": "flex", "gap": "20px", "marginBottom": "20px"}),
 
-        # row 3 — glucose + hba1c + bmi
+        # Row 3
         html.Div([
             html.Div([dcc.Graph(figure=fig_glucose, config={"displayModeBar": False})],
                      style={"flex": "1", "background": CARD, "borderRadius": "12px", "padding": "8px"}),
@@ -319,12 +311,12 @@ app.layout = html.Div(style={
                      style={"flex": "1", "background": CARD, "borderRadius": "12px", "padding": "8px"}),
         ], style={"display": "flex", "gap": "20px", "marginBottom": "20px"}),
 
-        # row 4 — correlation heatmap (full width)
+        # Row 4
         html.Div([
             dcc.Graph(figure=fig_corr, config={"displayModeBar": False}),
         ], style={"background": CARD, "borderRadius": "12px", "padding": "8px", "marginBottom": "48px"}),
 
-        # ── section: Model Prediction ──
+        # Model section
         html.H2("Model Prediction", style={
             "fontFamily": "'Space Grotesk', sans-serif",
             "fontSize": "1.3rem",
@@ -339,7 +331,7 @@ app.layout = html.Div(style={
             "color": MUTED, "marginBottom": "16px",
         }),
 
-        # model selector + button
+        # Selector and button
         html.Div([
             dcc.Dropdown(
                 id="model-dropdown",
@@ -367,10 +359,10 @@ app.layout = html.Div(style={
             }),
         ], style={"display": "flex", "gap": "16px", "alignItems": "center", "marginBottom": "32px"}),
 
-        # results area
+        # Results
         html.Div(id="results-area"),
 
-        # ── section: Models Summary ──
+        # Summary section
         html.Div([
             html.Div(style={"borderTop": "1px solid #252836", "marginTop": "48px", "marginBottom": "32px"}),
 
@@ -393,9 +385,7 @@ app.layout = html.Div(style={
     ]),
 ])
 
-# ─────────────────────────────────────────────
-#  CALLBACK
-# ─────────────────────────────────────────────
+# Callbacks
 @app.callback(
     Output("results-area", "children"),
     Input("run-btn", "n_clicks"),
