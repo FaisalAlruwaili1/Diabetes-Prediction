@@ -506,3 +506,29 @@ def show_summary(n):
 
 if __name__ == "__main__":
     app.run(debug=False)
+
+app.index_string = """
+<!DOCTYPE html>
+<html>
+<head>
+    {%metas%}
+    <meta property="og:title" content="Diabetes Mellitus Prediction using Machine Learning Models">
+    <meta property="og:description" content="Interactive ML dashboard for diabetes prediction">
+    <meta property="og:image" content="https://your-app.onrender.com/assets/dashboard.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-app.onrender.com">
+
+    <title>{%title%}</title>
+    {%favicon%}
+    {%css%}
+</head>
+<body>
+    {%app_entry%}
+    <footer>
+        {%config%}
+        {%scripts%}
+        {%renderer%}
+    </footer>
+</body>
+</html>
+"""
