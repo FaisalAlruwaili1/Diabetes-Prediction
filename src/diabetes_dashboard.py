@@ -116,7 +116,7 @@ us_state_abbrev = {
 
 state_df = df[df["location"].isin(us_state_abbrev)].copy()
 state_df["state_code"] = state_df["location"].map(us_state_abbrev)
-state_rate = state_df.groupby("state_code", as_index=False)["diabetes"].mean()
+state_rate = state_df.groupby("state_code", as_index=False)["diabetes"].sum()
 
 fig_map = px.choropleth(
     data_frame=state_rate,
